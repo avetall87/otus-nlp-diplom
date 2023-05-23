@@ -3,17 +3,17 @@
 title Поиск ответов на вопросы по базе знаний
 
 actor User
-User --> [TelegramBot] : задает вопрос
+User --> [TelegramBot]
 
 package "Облако" <<Облако>> {
   [TelegramBot] --> [CLOUD:retriever-service]
-  [CLOUD:retriever-service] --> [Store] : запрос на получение векторного представления базы знаний
-  [CLOUD:retriever-service] --> [CLOUD:squad-service] : передает контекст и вопрос для поиска ответа
-  [CLOUD:squad-service] --> [CLOUD:BERT] : запрос на поиск ответа по контексту
-  [CLOUD:BERT] --> [CLOUD:squad-service] : ответ на поиск ответа по контексту
-  [CLOUD:squad-service] --> [CLOUD:retriever-service] : ответ на вопрос пользователя
+  [CLOUD:retriever-service] --> [Store] : вектора
+  [CLOUD:retriever-service] --> [CLOUD:squad-service]
+  [CLOUD:squad-service] --> [RuBERT-Squad]
+  [RuBERT-Squad] --> [CLOUD:squad-service]
+  [CLOUD:squad-service] --> [CLOUD:retriever-service]
   [CLOUD:retriever-service] --> [TelegramBot] 
-  [TelegramBot] --> User  : ответ на запрос пользователя
 }
 
+[TelegramBot] --> User
 @enduml
