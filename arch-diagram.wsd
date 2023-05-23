@@ -1,0 +1,20 @@
+@startuml
+
+title Поиск ответов на вопросы по базе знаний
+
+actor User
+User -> [TelegramBot] : задает вопрос
+
+package "Облако" <<Облако>> {
+  [TelegramBot] -- [Elastic Load Balancer]
+  [Elastic Load Balancer] -> [CLOUD:retriever-service] : HTTP запрос
+  [CLOUD:retriever-service] -> [RDS] : запрос на получение векторного представления базы знаний
+  [CLOUD:retriever-service] -> [Elasticsearch] : запрос на получение идентификатора документа
+  [Elasticsearch] --> [CLOUD:squad-service] : идентификатор документа
+  [CLOUD:squad-service] -> [RDS] : запрос на получение текста документа
+  [CLOUD:squad-service] -> [CLOUD:BERT] : запрос на поиск ответа по контексту
+  [CLOUD:BERT] -> [CLOUD:squad-service] : ответ на поиск ответа по контексту
+  [CLOUD:squad-service] --> [CLOUD:retriever-service] : ответ на вопрос пользователя
+}
+
+@enduml
