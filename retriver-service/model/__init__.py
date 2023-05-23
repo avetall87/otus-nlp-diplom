@@ -6,4 +6,4 @@ import numpy as np
 tokenizer = AutoTokenizer.from_pretrained("sberbank-ai/sbert_large_nlu_ru")
 model = AutoModel.from_pretrained("sberbank-ai/sbert_large_nlu_ru")
 df = pd.read_csv('./dataset/dataset.csv', sep=',', engine='python')
-data_vectors = np.load('./dataset/vectors.npy')
+data_vectors = np.load('./model/vectors.npy')
