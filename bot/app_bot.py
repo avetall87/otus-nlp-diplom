@@ -38,7 +38,10 @@ def info_message_handle(message):
 @bot.message_handler(content_types=['text'])
 def find_answer(message):
     bot.send_message(message.chat.id, 'Спасибо за Ваш вопрос, начал искать ответ, пожалуйста, подождите ...')
-    bot.send_message(message.chat.id, f'Вот что мне удалось найти:\n{get_answer(message.text)}')
+
+    response_text = '\n'.join(get_answer(message.text))
+
+    bot.send_message(message.chat.id, f'Вот что мне удалось найти:\n{response_text}')
 
 
 def get_user_name(user: User) -> str:
