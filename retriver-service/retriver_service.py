@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from model.bert_model import find_similarity_documents
 import uvicorn
 
-min_similarity_weight = 60.0
+min_similarity_weight = float(0.60)
 
 app = FastAPI()
 
@@ -16,7 +16,7 @@ def get_doc(query: str):
     similarities = []
 
     for similarity in find_similarity_documents(query):
-        if similarity['weight'] >= min_similarity_weight:
+        if float(similarity['weight']) >= min_similarity_weight:
             similarities.append(similarity)
 
     return similarities

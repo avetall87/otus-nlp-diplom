@@ -8,9 +8,11 @@ import requests
 import telebot
 from telebot import types
 from telebot.types import User
-from bot import config
-from bot.answer_service.answer_service import get_answer
+from dotenv import dotenv_values
 
+from answer_service.answer_service import get_answer
+
+config = dotenv_values("./bot/env/.env")
 bot = telebot.TeleBot(config.get("TG_BOT_TOKEN"))
 
 

@@ -1,7 +1,7 @@
 import requests
+from dotenv import dotenv_values
 
-from bot import config
-
+config = dotenv_values("./bot/env/.env")
 retriver_service_url = config['RETRIVER_SERVICE_URL']
 
 def get_answer(question) -> []:
@@ -19,6 +19,7 @@ def get_answer(question) -> []:
 
 def __get_documents_by_question__(question: str) -> []:
     try:
-        return requests.get(retriver_service_url + '/search-doc/{question}', verify=False)
+        response = requests.get(retriver_service_url + f'/search-doc/{question}', verify=False)
+        return response.json()
     except Exception as e:
         return []
